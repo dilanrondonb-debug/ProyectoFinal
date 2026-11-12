@@ -41,12 +41,12 @@ public class Cliente extends Persona{
     }
 
     /** Canje: primero valida los puntos, luego aplica el beneficio y al final descuenta. */
-    public void canjear(IBeneficio IBeneficio) throws MonederoException {
-        if (puntos < IBeneficio.getCostoPuntos()) {
-            throw new PuntosInsuficientesException(puntos, IBeneficio.getCostoPuntos());
+    public void canjear(IBeneficio beneficio) throws MonederoException {
+        if (puntos < beneficio.getCostoPuntos()) {
+            throw new PuntosInsuficientesException(puntos, beneficio.getCostoPuntos());
         }
-        IBeneficio.aplicar(this);
-        agregarPuntos(-IBeneficio.getCostoPuntos(), "Canje: " + IBeneficio.getNombre());
+        beneficio.aplicar(this);
+        agregarPuntos(-beneficio.getCostoPuntos(), "Canje: " + beneficio.getNombre());
     }
 
     public boolean tieneMesSinCargos() {

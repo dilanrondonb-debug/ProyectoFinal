@@ -1,0 +1,90 @@
+/* --- FONDO GENERAL --- */
+.root {
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+    -fx-background-color: #0B0B0E;
+}
+
+/* --- MENÚ LATERAL (SIDEBAR) --- */
+.sidebar {
+    -fx-background-color: #12121A;
+    -fx-border-color: #2D2543;
+    -fx-border-width: 0 1 0 0; /* Borde sutil solo a la derecha */
+}
+
+/* Botones del menú lateral */
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9CA3AF;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 20 12 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Efecto al pasar el mouse por el menú */
+.sidebar-btn:hover {
+    -fx-background-color: #241442; /* Morado muy oscuro de fondo */
+    -fx-text-fill: #A855F7; /* Letra morada neón */
+    -fx-border-color: #A855F7;
+    -fx-border-width: 0 0 0 4; /* Línea lateral izquierda brillante */
+}
+
+/* --- TARJETAS (CARDS) --- */
+.card {
+    -fx-background-color: #16161E;
+    -fx-background-radius: 12;
+    -fx-border-color: #2D2543;
+    -fx-border-radius: 12;
+    -fx-padding: 20;
+}
+
+/* Tarjeta principal del Monedero (Degradado futurista) */
+.wallet-card {
+    -fx-background-color: linear-gradient(to bottom right, #7C3AED, #4C1D95);
+    -fx-background-radius: 16;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(124, 58, 237, 0.4), 15, 0, 0, 5);
+}
+
+/* --- BOTONES PRINCIPALES --- */
+.btn-primary {
+    -fx-background-color: #7C3AED;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-padding: 10 25 10 25;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #A855F7;
+    -fx-effect: dropshadow(three-pass-box, rgba(168, 85, 247, 0.5), 10, 0, 0, 0); /* Resplandor neón */
+}
+
+/* --- CAMPOS DE TEXTO --- */
+.text-field {
+    -fx-background-color: #0B0B0E;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #2D2543;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+}
+
+.text-field:focused {
+    -fx-border-color: #A855F7; /* Se ilumina en morado al escribir */
+    -fx-border-width: 1.5;
+}
+
+/* --- TEXTOS --- */
+.text-title {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.text-subtitle {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 14px;
+}
