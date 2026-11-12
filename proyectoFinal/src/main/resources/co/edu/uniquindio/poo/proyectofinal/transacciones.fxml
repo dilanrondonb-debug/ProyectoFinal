@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="18.0" styleClass="vista" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.viewController.TransaccionesViewController">
+    <padding>
+        <Insets bottom="28.0" left="30.0" right="30.0" top="28.0" />
+    </padding>
+    <children>
+        <Label styleClass="text-title" text="Transacciones" />
+
+        <VBox spacing="12.0" styleClass="card">
+            <children>
+                <GridPane hgap="12.0" vgap="12.0">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="90.0" prefWidth="90.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints minWidth="70.0" prefWidth="70.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <children>
+                        <Label styleClass="text-subtitle" text="Operación" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <ComboBox fx:id="cmbTipo" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label styleClass="text-subtitle" text="Monto" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtMonto" promptText="Ej: 25000" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                        <Label styleClass="text-subtitle" text="Monedero" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cmbOrigen" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+
+                        <HBox fx:id="boxDestino" alignment="CENTER_LEFT" spacing="12.0" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="2">
+                            <children>
+                                <Label minWidth="90.0" styleClass="text-subtitle" text="Destino" />
+                                <ComboBox fx:id="cmbClienteDestino" maxWidth="Infinity" promptText="Cliente" HBox.hgrow="ALWAYS" />
+                                <ComboBox fx:id="cmbMonederoDestino" maxWidth="Infinity" promptText="Monedero" HBox.hgrow="ALWAYS" />
+                            </children>
+                        </HBox>
+                    </children>
+                </GridPane>
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#onEjecutar" styleClass="btn-primary" text="Ejecutar" />
+                        <Label fx:id="lblInfo" styleClass="text-subtitle" />
+                        <Label fx:id="lblEstado" wrapText="true" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <VBox spacing="12.0" styleClass="card" VBox.vgrow="ALWAYS">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                    <children>
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Historial" />
+                        <ComboBox fx:id="cmbFiltro" prefWidth="300.0" promptText="Todos los monederos" />
+                        <Button mnemonicParsing="false" onAction="#onVerTodas" styleClass="btn-secondary" text="Ver todos" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#onRevertir" styleClass="btn-danger" text="Revertir seleccionada" />
+                    </children>
+                </HBox>
+                <TableView fx:id="tabla" minHeight="140.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colFecha" text="Fecha" />
+                        <TableColumn fx:id="colId" text="ID" />
+                        <TableColumn fx:id="colTipo" text="Tipo" />
+                        <TableColumn fx:id="colMonedero" text="Monedero" />
+                        <TableColumn fx:id="colDetalle" text="Detalle" />
+                        <TableColumn fx:id="colMonto" text="Monto" />
+                        <TableColumn fx:id="colPuntos" text="Puntos" />
+                        <TableColumn fx:id="colEstado" text="Estado" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</VBox>

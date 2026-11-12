@@ -88,3 +88,123 @@
     -fx-text-fill: #9CA3AF;
     -fx-font-size: 14px;
 }
+
+/* =====================================================
+   ESTILOS PARA LAS PANTALLAS CONECTADAS AL MODELO
+   ===================================================== */
+
+/* Botón activo del menú lateral */
+.sidebar-btn-active {
+    -fx-background-color: #241442;
+    -fx-text-fill: #A855F7;
+    -fx-border-color: #A855F7;
+    -fx-border-width: 0 0 0 4;
+}
+
+/* Botones secundario y de peligro */
+.btn-secondary {
+    -fx-background-color: transparent;
+    -fx-text-fill: #C4B5FD;
+    -fx-font-weight: bold;
+    -fx-border-color: #7C3AED;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 9 20 9 20;
+    -fx-cursor: hand;
+}
+.btn-secondary:hover { -fx-background-color: #241442; }
+
+.btn-danger {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 25 10 25;
+    -fx-cursor: hand;
+}
+.btn-danger:hover { -fx-background-color: #F87171; }
+
+/* Texto por defecto dentro de las pantallas (fondo oscuro) */
+.vista .label { -fx-text-fill: #E5E7EB; }
+.vista .text-title { -fx-text-fill: #FFFFFF; }
+.vista .text-subtitle { -fx-text-fill: #9CA3AF; }
+.vista .msg-ok { -fx-text-fill: #34D399; }
+.vista .msg-error { -fx-text-fill: #F87171; }
+
+/* Contenedor con scroll transparente */
+.scroll-pane { -fx-background-color: transparent; -fx-background: transparent; }
+.scroll-pane > .viewport { -fx-background-color: transparent; }
+.scroll-bar { -fx-background-color: transparent; }
+.scroll-bar .thumb { -fx-background-color: #2D2543; -fx-background-radius: 6; }
+
+/* Tablas */
+.table-view {
+    -fx-background-color: #16161E;
+    -fx-control-inner-background: #16161E;
+    -fx-control-inner-background-alt: #1B1B26;
+    -fx-table-cell-border-color: transparent;
+    -fx-border-color: #2D2543;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+.table-view .column-header-background { -fx-background-color: #12121A; }
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #12121A;
+    -fx-border-color: #2D2543;
+    -fx-border-width: 0 0 1 0;
+}
+.table-view .column-header .label { -fx-text-fill: #C4B5FD; -fx-font-weight: bold; }
+.table-row-cell { -fx-background-color: -fx-control-inner-background; }
+.table-row-cell:odd { -fx-background-color: -fx-control-inner-background-alt; }
+.table-row-cell:selected { -fx-background-color: #4C1D95; }
+.table-cell { -fx-text-fill: #E5E7EB; }
+.table-row-cell:selected .table-cell { -fx-text-fill: #FFFFFF; }
+.table-view .placeholder .label { -fx-text-fill: #6B7280; }
+
+/* Listas */
+.list-view {
+    -fx-background-color: #16161E;
+    -fx-control-inner-background: #16161E;
+    -fx-border-color: #2D2543;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+.list-cell { -fx-background-color: transparent; -fx-text-fill: #E5E7EB; }
+.list-cell:selected { -fx-background-color: #4C1D95; }
+
+/* Combos y selector de fecha */
+.combo-box, .date-picker {
+    -fx-background-color: #0B0B0E;
+    -fx-border-color: #2D2543;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+.combo-box:focused, .date-picker:focused { -fx-border-color: #A855F7; }
+.combo-box .list-cell { -fx-text-fill: #FFFFFF; -fx-background-color: transparent; }
+.combo-box .arrow-button, .date-picker .arrow-button { -fx-background-color: transparent; }
+.combo-box .arrow-button .arrow { -fx-background-color: #A855F7; }
+.combo-box-popup .list-view { -fx-background-color: #16161E; -fx-border-color: #2D2543; }
+.combo-box-popup .list-cell { -fx-background-color: #16161E; -fx-text-fill: #E5E7EB; }
+.combo-box-popup .list-cell:hover, .combo-box-popup .list-cell:selected { -fx-background-color: #4C1D95; }
+
+/* Barra de progreso (rango) */
+.progress-bar > .track { -fx-background-color: rgba(255,255,255,0.25); -fx-background-radius: 6; }
+.progress-bar > .bar { -fx-background-color: #FFFFFF; -fx-background-radius: 6; -fx-padding: 4; }
+
+/* Gráfico */
+.chart { -fx-background-color: transparent; }
+.chart-content { -fx-background-color: transparent; }
+.chart-legend { -fx-background-color: transparent; }
+.chart-legend-item { -fx-text-fill: #E5E7EB; }
+
+/* Ventanas de diálogo (errores y confirmaciones) */
+.dialog-pane { -fx-background-color: #16161E; }
+.dialog-pane .label { -fx-text-fill: #FFFFFF; }
+.dialog-pane .button {
+    -fx-background-color: #7C3AED;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+.dialog-pane .button:hover { -fx-background-color: #A855F7; }

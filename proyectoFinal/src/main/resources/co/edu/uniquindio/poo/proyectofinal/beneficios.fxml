@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="18.0" styleClass="vista" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.viewController.BeneficiosViewController">
+    <padding>
+        <Insets bottom="28.0" left="30.0" right="30.0" top="28.0" />
+    </padding>
+    <children>
+        <Label styleClass="text-title" text="Mis Beneficios" />
+
+        <HBox spacing="20.0">
+            <children>
+                <VBox prefHeight="150.0" spacing="8.0" styleClass="wallet-card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="lblPuntos" style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label fx:id="lblRango" style="-fx-text-fill: white; -fx-font-weight: bold;" />
+                        <ProgressBar fx:id="barraRango" maxWidth="Infinity" progress="0.0" />
+                        <Label fx:id="lblSiguienteRango" style="-fx-text-fill: #e2e8f0;" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="150.0" spacing="10.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="text-subtitle" text="Beneficios activos" />
+                        <Label fx:id="lblDescuento" style="-fx-text-fill: white;" />
+                        <Label fx:id="lblMesSinCargos" style="-fx-text-fill: white;" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <HBox spacing="15.0" VBox.vgrow="ALWAYS">
+            <children>
+                <VBox spacing="10.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Canjear puntos" />
+                        <TableView fx:id="tablaBeneficios" minHeight="120.0" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colBeneficio" text="Beneficio" />
+                                <TableColumn fx:id="colCosto" maxWidth="110.0" text="Costo" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#onCanjear" styleClass="btn-primary" text="Canjear seleccionado" />
+                                <Label fx:id="lblEstado" wrapText="true" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox spacing="10.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Historial de puntos" />
+                        <TableView fx:id="tablaPuntos" minHeight="120.0" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colFecha" text="Fecha" />
+                                <TableColumn fx:id="colPuntosMov" maxWidth="80.0" text="Puntos" />
+                                <TableColumn fx:id="colMotivo" text="Motivo" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>

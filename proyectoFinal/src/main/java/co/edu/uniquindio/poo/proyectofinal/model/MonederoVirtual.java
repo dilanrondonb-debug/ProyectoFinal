@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -111,6 +112,46 @@ public class MonederoVirtual {
         List<TransaccionProgramada> copia = new ArrayList<>(programadas);
         Ordenador.ordenarPorInsercion(copia);
         return copia;
+    }
+
+    /** Ejecuta, en orden de fecha, las programadas cuya fecha ya llegó. Las recurrentes se reprograman. */
+    public List<String> procesarProgramadasVencidas() {
+        LocalDate hoy = LocalDate.now();
+        List<String> resultados = new ArrayList<>();
+        for (TransaccionProgramada p : obtenerProgramadasOrdenadas()) {
+            if (p.getFechaEjecucion().isAfter(hoy)) {
+                break; // la lista está ordenada: el resto es posterior
+            }
+            programadas.remove(p);
+            try {
+                p.ejecutar();
+                revisarAlertas(p.getTransaccion().getMonedero(), p.getTransaccion());
+                resultados.add("Ejecutada: " + p);
+            } catch (MonederoException e) {
+                resultados.add("Falló: " + p + " -> " + e.getMessage());
+            }
+            reprogramar(p, hoy);
+        }
+        return resultados;
+    }
+
+    public List<TransaccionProgramada> getProgramadas() { return List.copyOf(programadas); }
+
+    public void cancelarProgramada(TransaccionProgramada programada) { programadas.remove(programada); }
+
+    private void reprogramar(TransaccionProgramada p, LocalDate hoy) {
+        if (p.getFrecuencia() == Frecuencia.UNICA) {
+            return;
+        }
+        LocalDate siguiente = p.getFechaEjecucion();
+        do {
+            siguiente = p.getFrecuencia() == Frecuencia.SEMANAL ? siguiente.plusWeeks(1) : siguiente.plusMonths(1);
+        } while (siguiente.isBefore(hoy));
+        try {
+            programadas.add(new TransaccionProgramada(siguiente, p.getFrecuencia(), TipoTransaccion.copiarDe(p.getTransaccion())));
+        } catch (MonederoException e) {
+            notificar("No se pudo reprogramar: " + p);
+        }
     }
 
     // ---------- Alertas ----------

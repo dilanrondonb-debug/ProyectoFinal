@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="18.0" styleClass="vista" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinal.viewController.AnalisisViewController">
+    <padding>
+        <Insets bottom="28.0" left="30.0" right="30.0" top="28.0" />
+    </padding>
+    <children>
+        <HBox alignment="CENTER_LEFT" spacing="12.0">
+            <children>
+                <Label styleClass="text-title" text="Análisis y Alertas" />
+                <Region HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="cmbMonedero" prefWidth="300.0" promptText="Todos los monederos" />
+                <Button mnemonicParsing="false" onAction="#onTodos" styleClass="btn-secondary" text="Ver todos" />
+            </children>
+        </HBox>
+
+        <HBox spacing="15.0">
+            <children>
+                <VBox spacing="6.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="text-subtitle" text="Transacciones analizadas" />
+                        <Label fx:id="lblTotal" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    </children>
+                </VBox>
+                <VBox spacing="6.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="text-subtitle" text="Promedio" />
+                        <Label fx:id="lblPromedio" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    </children>
+                </VBox>
+                <VBox spacing="6.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="text-subtitle" text="Desviación estándar" />
+                        <Label fx:id="lblDesviacion" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                    </children>
+                </VBox>
+                <VBox spacing="6.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="text-subtitle" text="Umbral (promedio + 2σ)" />
+                        <Label fx:id="lblUmbral" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #f59e0b;" wrapText="true" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <HBox spacing="15.0" VBox.vgrow="ALWAYS">
+            <children>
+                <VBox spacing="10.0" styleClass="card" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Transacciones atípicas (potencialmente sospechosas)" />
+                        <TableView fx:id="tablaAtipicas" minHeight="150.0" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colFecha" text="Fecha" />
+                                <TableColumn fx:id="colTipo" text="Tipo" />
+                                <TableColumn fx:id="colMonedero" text="Monedero" />
+                                <TableColumn fx:id="colMonto" text="Monto" />
+                                <TableColumn fx:id="colExceso" text="Excede el umbral en" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <Label styleClass="text-subtitle" text="Algoritmo: una transacción es atípica si su monto supera promedio + 2 × desviación estándar. Complejidad temporal O(n)." wrapText="true" />
+                    </children>
+                </VBox>
+                <VBox spacing="10.0" styleClass="card" prefWidth="300.0">
+                    <children>
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Dinero movido por tipo" />
+                        <PieChart fx:id="graficoTipos" labelsVisible="false" legendVisible="true" minHeight="200.0" VBox.vgrow="ALWAYS" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <VBox spacing="10.0" styleClass="card">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                    <children>
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;" text="Alertas y notificaciones" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#onLimpiarAlertas" styleClass="btn-secondary" text="Limpiar" />
+                    </children>
+                </HBox>
+                <ListView fx:id="lstAlertas" prefHeight="120.0" />
+            </children>
+        </VBox>
+    </children>
+</VBox>
