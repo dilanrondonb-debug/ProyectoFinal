@@ -1,30 +1,45 @@
 package co.edu.uniquindio.poo.proyectofinal.controller;
 
-import co.edu.uniquindio.poo.proyectofinal.model.Cliente;
-import co.edu.uniquindio.poo.proyectofinal.model.MonederoVirtual;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import co.edu.uniquindio.poo.proyectofinal.model.*;
+
+import java.util.List;
 
 public class ClienteController {
 
-    private MonederoVirtual monederoVirtual;
+    private final MonederoVirtual monederoVirtual;
 
     public ClienteController(MonederoVirtual monederoVirtual) {
         this.monederoVirtual = monederoVirtual;
     }
 
-    // Método para agregar un cliente validando reglas de negocio
-    public boolean registrarCliente(String cedula, String nombre, String correo, String telefono) {
-        // Validar si ya existe o crear la lógica de excepción personalizada
-        Cliente nuevoCliente = new Cliente(cedula, nombre, correo, telefono);
-        return monederoVirtual.getClientes().add(nuevoCliente); // Asumiendo que MonederoVirtual tiene una lista de clientes
+    public List<Cliente> listar() {
+        return monederoVirtual.getClientes();
     }
 
-    // Obtener la lista observable para la TableView
-    public ObservableList<Cliente> obtenerListaClientes() {
-        if (monederoVirtual.getClientes() != null) {
-            return FXCollections.observableArrayList(monederoVirtual.getClientes());
+    public Cliente agregarCliente(String cedula, String nombre, String correo, String telefono)
+            throws DatoInvalidoException {
+        Cliente cliente = new Cliente(cedula.trim(), nombre, correo.trim(), telefono.trim());
+        monederoVirtual.registrarCliente(cliente);
+        return cliente;
+    }
+
+    public void actualizarCliente(String cedula, String nombre, String correo, String telefono)
+            throws MonederoException {
+        monederoVirtual.actualizarCliente(cedula, nombre, correo.trim(), telefono.trim());
+    }
+
+    public void eliminarCliente(String cedula) throws ClienteNoEncontradoException {
+        monederoVirtual.eliminarCliente(cedula);
+    }
+
+    public Monedero agregarMonedero(Cliente cliente, TipoMonedero tipo, String nombre) throws MonederoException {
+        Validaciones.exigir(cliente, "Seleccione un cliente");
+        Validaciones.exigir(tipo, "Seleccione el tipo de monedero");
+        if (nombre == null || nombre.isBlank()) {
+            throw new DatoInvalidoException("El monedero necesita un nombre");
         }
-        return FXCollections.observableArrayList();
+        Monedero monedero = tipo.crear(nombre.trim());
+        monederoVirtual.agregarMonedero(cliente.getCedula(), monedero);
+        return monedero;
     }
 }
