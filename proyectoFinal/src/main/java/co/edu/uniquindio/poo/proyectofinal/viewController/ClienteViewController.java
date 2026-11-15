@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinal.viewController;
 
+import co.edu.uniquindio.poo.proyectofinal.App;
 import co.edu.uniquindio.poo.proyectofinal.controller.ClienteController;
 import co.edu.uniquindio.poo.proyectofinal.controller.ModelFactory;
 import co.edu.uniquindio.poo.proyectofinal.model.Cliente;
@@ -51,9 +52,14 @@ public class ClienteViewController {
         });
         refrescar();
     }
+    @FXML
+    public void onVolver() {
+        // Método para regresar al Dashboard principal
+        App.openViewPrincipal();
+    }
 
     @FXML
-    void onAgregar() {
+    public void onAgregar() {
         try {
             Cliente nuevo = controller.agregarCliente(txtCedula.getText(), txtNombre.getText(),
                     txtCorreo.getText(), txtTelefono.getText());
@@ -71,7 +77,7 @@ public class ClienteViewController {
     }
 
     @FXML
-    void onActualizar() {
+    public void onActualizar() {
         if (tablaClientes.getSelectionModel().getSelectedItem() == null) {
             Ui.error("Seleccione un cliente de la tabla para actualizarlo");
             return;
@@ -89,7 +95,7 @@ public class ClienteViewController {
     }
 
     @FXML
-    void onEliminar() {
+    public void onEliminar() {
         Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
             Ui.error("Seleccione un cliente de la tabla para eliminarlo");
@@ -114,7 +120,7 @@ public class ClienteViewController {
     }
 
     @FXML
-    void onUsarCliente() {
+    public void onUsarCliente() {
         Cliente seleccionado = tablaClientes.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
             Ui.error("Seleccione un cliente de la tabla");
@@ -126,7 +132,7 @@ public class ClienteViewController {
     }
 
     @FXML
-    void onLimpiar() {
+    public void onLimpiar() {
         tablaClientes.getSelectionModel().clearSelection();
         txtCedula.clear();
         txtNombre.clear();
