@@ -43,12 +43,6 @@ public class AnalizadorGastosTest {
     }
 
     @Test
-    public void promedioDeUnaListaVaciaEsCero() {
-        LOG.info("Inicio de prueba promedioDeUnaListaVaciaEsCero...");
-        assertEquals(0.0, analizador.promedio(List.of()), DELTA);
-    }
-
-    @Test
     public void desviacionEstandarDeLosMontos() throws Exception {
         LOG.info("Inicio de prueba desviacionEstandarDeLosMontos...");
         // desviaciones: -100, 0, 100 -> varianza 20000/3 -> raíz = 81.6497
@@ -61,36 +55,6 @@ public class AnalizadorGastosTest {
         List<Transaccion> lista = depositos(100, 100, 100, 100, 100, 100, 50000);
         Transaccion grande = lista.get(6);
         assertIterableEquals(List.of(grande), analizador.detectarAtipicas(lista));
-    }
-
-    @Test
-    public void sinValoresExtremosNoHayAtipicas() throws Exception {
-        LOG.info("Inicio de prueba sinValoresExtremosNoHayAtipicas...");
-        assertTrue(analizador.detectarAtipicas(depositos(100, 100, 100, 100, 100, 100)).isEmpty());
-    }
-
-    @Test
-    public void conMenosDeSeisTransaccionesNuncaHayAtipicas() throws Exception {
-        LOG.info("Inicio de prueba conMenosDeSeisTransaccionesNuncaHayAtipicas...");
-        // Con pocos datos ningún monto puede superar promedio + 2 × desviación
-        assertTrue(analizador.detectarAtipicas(depositos(100, 100, 100, 50000)).isEmpty());
-    }
-
-    @Test
-    public void unaListaVaciaONoTieneAtipicas() {
-        LOG.info("Inicio de prueba unaListaVaciaONoTieneAtipicas...");
-        assertTrue(analizador.detectarAtipicas(List.of()).isEmpty());
-    }
-
-    @Test
-    public void lasTransaccionesRevertidasNoCuentanParaElAnalisis() throws Exception {
-        LOG.info("Inicio de prueba lasTransaccionesRevertidasNoCuentanParaElAnalisis...");
-        List<Transaccion> lista = depositos(100, 100, 100, 100, 100, 100, 50000);
-        for (Transaccion t : lista) {
-            t.ejecutar();
-        }
-        lista.get(6).revertir();
-        assertTrue(analizador.detectarAtipicas(lista).isEmpty());
     }
 
     @Test

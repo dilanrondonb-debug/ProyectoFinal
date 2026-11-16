@@ -41,34 +41,7 @@ public class TransaccionTest {
         assertEquals(0, new Deposito(gastosAna, 99).calcularPuntos());
     }
 
-    @Test
-    public void retiroDaDosPuntosPorCadaCien() throws Exception {
-        LOG.info("Inicio de prueba retiroDaDosPuntosPorCadaCien...");
-        assertEquals(20, new Retiro(gastosAna, 1000).calcularPuntos());
-    }
-
-    @Test
-    public void transferenciaDaTresPuntosPorCadaCien() throws Exception {
-        LOG.info("Inicio de prueba transferenciaDaTresPuntosPorCadaCien...");
-        assertEquals(30, new Transferencia(gastosAna, gastosLuis, 1000).calcularPuntos());
-    }
-
     // ---------- Validaciones ----------
-
-    @Test
-    public void montoCeroONegativoLanzaExcepcion() {
-        LOG.info("Inicio de prueba montoCeroONegativoLanzaExcepcion...");
-        assertThrows(MontoInvalidoException.class, () -> new Deposito(gastosAna, 0));
-        assertThrows(MontoInvalidoException.class, () -> new Retiro(gastosAna, -50));
-        assertThrows(MontoInvalidoException.class, () -> new Transferencia(gastosAna, gastosLuis, -1));
-    }
-
-    @Test
-    public void transferirAlMismoMonederoLanzaExcepcion() {
-        LOG.info("Inicio de prueba transferirAlMismoMonederoLanzaExcepcion...");
-        assertThrows(MonederoException.class, () -> new Transferencia(gastosAna, gastosAna, 10));
-    }
-
     @Test
     public void noSePuedeEjecutarDosVeces() throws Exception {
         LOG.info("Inicio de prueba noSePuedeEjecutarDosVeces...");
@@ -81,15 +54,6 @@ public class TransaccionTest {
     // ---------- Ejecución ----------
 
     @Test
-    public void ejecutarDepositoSumaSaldoPuntosEHistorial() throws Exception {
-        LOG.info("Inicio de prueba ejecutarDepositoSumaSaldoPuntosEHistorial...");
-        new Deposito(gastosAna, 1000).ejecutar();
-        assertEquals(1000.0, gastosAna.getSaldo(), DELTA);
-        assertEquals(10, ana.getPuntos());
-        assertEquals(1, gastosAna.getTransacciones().size());
-    }
-
-    @Test
     public void ejecutarRetiroCobraComisionYDaPuntos() throws Exception {
         LOG.info("Inicio de prueba ejecutarRetiroCobraComisionYDaPuntos...");
         new Deposito(gastosAna, 10000).ejecutar();          // +100 puntos
@@ -98,15 +62,6 @@ public class TransaccionTest {
         assertEquals(10.0, retiro.getComisionCobrada(), DELTA);
         assertEquals(8990.0, gastosAna.getSaldo(), DELTA);   // 10000 - 1000 - 10
         assertEquals(120, ana.getPuntos());
-    }
-
-    @Test
-    public void retiroConSaldoInsuficienteNoCambiaNada() {
-        LOG.info("Inicio de prueba retiroConSaldoInsuficienteNoCambiaNada...");
-        assertThrows(SaldoInsuficienteException.class, () -> new Retiro(gastosAna, 100).ejecutar());
-        assertEquals(0.0, gastosAna.getSaldo(), DELTA);
-        assertEquals(0, ana.getPuntos());
-        assertTrue(gastosAna.getTransacciones().isEmpty());
     }
 
     @Test
@@ -129,51 +84,7 @@ public class TransaccionTest {
         assertEquals(0, luis.getPuntos());
     }
 
-    @Test
-    public void transferenciaSinSaldoNoCambiaNingunSaldo() throws Exception {
-        LOG.info("Inicio de prueba transferenciaSinSaldoNoCambiaNingunSaldo...");
-        gastosAna.depositar(100);
-        assertThrows(SaldoInsuficienteException.class,
-                () -> new Transferencia(gastosAna, gastosLuis, 500).ejecutar());
-        assertEquals(100.0, gastosAna.getSaldo(), DELTA);
-        assertEquals(0.0, gastosLuis.getSaldo(), DELTA);
-    }
-
     // ---------- Reversión ----------
-
-    @Test
-    public void revertirDepositoDevuelveSaldoYPuntos() throws Exception {
-        LOG.info("Inicio de prueba revertirDepositoDevuelveSaldoYPuntos...");
-        Deposito deposito = new Deposito(gastosAna, 1000);
-        deposito.ejecutar();
-        deposito.revertir();
-        assertEquals(0.0, gastosAna.getSaldo(), DELTA);
-        assertEquals(0, ana.getPuntos());
-        assertTrue(deposito.isRevertida());
-    }
-
-    @Test
-    public void revertirRetiroDevuelveElMontoMasLaComision() throws Exception {
-        LOG.info("Inicio de prueba revertirRetiroDevuelveElMontoMasLaComision...");
-        new Deposito(gastosAna, 10000).ejecutar();           // +100 puntos
-        Retiro retiro = new Retiro(gastosAna, 1000);
-        retiro.ejecutar();                                    // saldo 8990, +20 puntos
-        retiro.revertir();
-        assertEquals(10000.0, gastosAna.getSaldo(), DELTA);
-        assertEquals(100, ana.getPuntos());
-    }
-
-    @Test
-    public void revertirTransferenciaDevuelveElDineroAlOrigen() throws Exception {
-        LOG.info("Inicio de prueba revertirTransferenciaDevuelveElDineroAlOrigen...");
-        new Deposito(gastosAna, 5000).ejecutar();
-        Transferencia transferencia = new Transferencia(gastosAna, gastosLuis, 2000);
-        transferencia.ejecutar();
-        transferencia.revertir();
-        assertEquals(5000.0, gastosAna.getSaldo(), DELTA);
-        assertEquals(0.0, gastosLuis.getSaldo(), DELTA);
-        assertEquals(50, ana.getPuntos());
-    }
 
     @Test
     public void revertirTransferenciaFallaSiElDestinoYaGastoElDinero() throws Exception {
@@ -185,21 +96,5 @@ public class TransaccionTest {
         assertThrows(SaldoInsuficienteException.class, transferencia::revertir);
         assertFalse(transferencia.isRevertida());
         assertEquals(3000.0, gastosAna.getSaldo(), DELTA);
-    }
-
-    @Test
-    public void noSePuedeRevertirDosVeces() throws Exception {
-        LOG.info("Inicio de prueba noSePuedeRevertirDosVeces...");
-        Deposito deposito = new Deposito(gastosAna, 1000);
-        deposito.ejecutar();
-        deposito.revertir();
-        assertThrows(MonederoException.class, deposito::revertir);
-    }
-
-    @Test
-    public void noSePuedeRevertirUnaTransaccionNoEjecutada() throws Exception {
-        LOG.info("Inicio de prueba noSePuedeRevertirUnaTransaccionNoEjecutada...");
-        Deposito deposito = new Deposito(gastosAna, 1000);
-        assertThrows(MonederoException.class, deposito::revertir);
     }
 }

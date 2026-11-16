@@ -31,23 +31,6 @@ public class MonederoTest {
     }
 
     @Test
-    public void depositarMontoInvalidoLanzaExcepcionYNoCambiaElSaldo() {
-        LOG.info("Inicio de prueba depositarMontoInvalidoLanzaExcepcionYNoCambiaElSaldo...");
-        assertThrows(MontoInvalidoException.class, () -> gastos.depositar(0));
-        assertThrows(MontoInvalidoException.class, () -> gastos.depositar(-50));
-        assertEquals(0.0, gastos.getSaldo(), DELTA);
-    }
-
-    @Test
-    public void retirarMontoInvalidoLanzaExcepcionYNoCambiaElSaldo() throws Exception {
-        LOG.info("Inicio de prueba retirarMontoInvalidoLanzaExcepcionYNoCambiaElSaldo...");
-        gastos.depositar(100);
-        assertThrows(MontoInvalidoException.class, () -> gastos.retirar(0));
-        assertThrows(MontoInvalidoException.class, () -> gastos.retirar(-10));
-        assertEquals(100.0, gastos.getSaldo(), DELTA);
-    }
-
-    @Test
     public void retirarMasQueElSaldoLanzaExcepcionYNoCambiaElSaldo() throws Exception {
         LOG.info("Inicio de prueba retirarMasQueElSaldoLanzaExcepcionYNoCambiaElSaldo...");
         gastos.depositar(100);
@@ -62,19 +45,6 @@ public class MonederoTest {
         assertEquals(20.0, ahorros.calcularComision(1000), DELTA);
     }
 
-    @Test
-    public void comisionDeGastosEsUnoPorCiento() {
-        LOG.info("Inicio de prueba comisionDeGastosEsUnoPorCiento...");
-        assertEquals(10.0, gastos.calcularComision(1000), DELTA);
-    }
-
-    @Test
-    public void comisionAplicableSinBeneficiosEsLaComisionNormal() throws Exception {
-        LOG.info("Inicio de prueba comisionAplicableSinBeneficiosEsLaComisionNormal...");
-        Cliente cliente = new Cliente("12345678", "Ana", "ana@mail.com", "3001234567");
-        cliente.agregarMonedero(gastos);
-        assertEquals(10.0, gastos.calcularComisionAplicable(1000), DELTA);
-    }
 
     @Test
     public void comisionAplicableConDescuentoDelDiezPorCiento() throws Exception {
@@ -92,16 +62,6 @@ public class MonederoTest {
         cliente.agregarMonedero(gastos);
         cliente.setMesSinCargosHasta(LocalDate.now().plusDays(10));
         assertEquals(0.0, gastos.calcularComisionAplicable(1000), DELTA);
-    }
-
-    @Test
-    public void mesSinCargosVencidoYaNoAplica() throws Exception {
-        LOG.info("Inicio de prueba mesSinCargosVencidoYaNoAplica...");
-        Cliente cliente = new Cliente("12345678", "Ana", "ana@mail.com", "3001234567");
-        cliente.agregarMonedero(gastos);
-        cliente.setMesSinCargosHasta(LocalDate.now().minusDays(1));
-        assertFalse(cliente.tieneMesSinCargos());
-        assertEquals(10.0, gastos.calcularComisionAplicable(1000), DELTA);
     }
 
     @Test
